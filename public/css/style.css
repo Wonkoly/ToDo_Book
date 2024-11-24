@@ -1,0 +1,12 @@
+.mt-3 {
+    margin-top: 40px !important; /* Mayor margen superior */
+}
+
+.mb-5 {
+    margin-bottom: 60px !important; /* Mayor margen inferior */
+}
+
+.btn-success {
+    padding: 0.5rem 2rem;
+    font-size: 1.2rem;
+}

@@ -34,6 +34,15 @@ function getUserApiKey($userId) {
     return $result['todoist_api_key'] ?? null;
 }
 
+function getTodoistApiKey($userId) {
+    global $conn;
+    $stmt = $conn->prepare("SELECT todoist_api_key FROM users WHERE id = ?");
+    $stmt->bind_param('i', $userId);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    return $result['todoist_api_key'] ?? null;
+}
+
 function updateUserApiKey($userId, $apiKey) {
     global $conn;
 

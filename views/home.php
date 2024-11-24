@@ -8,6 +8,7 @@ $userId = $_SESSION['user_id'];
 $userName = $_SESSION['user_name'] ?? 'Usuario';
 $profilePhoto = getUserProfilePhoto($userId); // Obtener la foto de perfil
 $books = getItemsByUser($userId); // Obtener los libros del usuario
+$todoistApiKey = getTodoistApiKey($userId); // Verifica si tiene el usaurio una api key registrada
 ?>
 
 <!-- Navbar -->
@@ -96,12 +97,16 @@ $books = getItemsByUser($userId); // Obtener los libros del usuario
             <?php endforeach; ?>
         </tbody>
     </table>
+    
+    <!-- Botón de sincronización -->
+    <?php if ($todoistApiKey): ?>
+    <div class="text-center mt-3 mb-5">
+        <button class="btn btn-success" onclick="location.href='/syncTodoist'">
+            Sincronizar con Todoist
+        </button>
+    </div>
+    <?php endif; ?>     
 </div>
-
-<!-- Sincronizar con Todoist -->
-<button class="btn btn-success mt-3" onclick="location.href='/syncTodoist'">
-    Sincronizar con Todoist
-</button>
 
 <!-- Footer -->
 <footer class="bg-dark text-white text-center py-3 mt-auto">
