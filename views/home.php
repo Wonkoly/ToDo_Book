@@ -98,6 +98,11 @@ $books = getItemsByUser($userId); // Obtener los libros del usuario
     </table>
 </div>
 
+<!-- Sincronizar con Todoist -->
+<button class="btn btn-success mt-3" onclick="location.href='/syncTodoist'">
+    Sincronizar con Todoist
+</button>
+
 <!-- Footer -->
 <footer class="bg-dark text-white text-center py-3 mt-auto">
     <p>&copy; <?= date('Y') ?> ToDo_Book. Todos los derechos reservados.</p>

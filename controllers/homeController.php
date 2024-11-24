@@ -1,5 +1,15 @@
 <?php
 require_once __DIR__ . '/../models/itemModel.php';
+require_once __DIR__ . '/../helpers/todoistHelper.php';
+
+function syncTodoist() {
+    session_start();
+    $userId = $_SESSION['user_id'];
+
+    $result = syncItemsToTodoist($userId); // Llama a la lógica de sincronización
+    echo $result; // Devuelve el resultado
+}
+
 
 function home() {
     session_start();

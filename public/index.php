@@ -3,6 +3,7 @@ require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../controllers/authController.php';
 require_once __DIR__ . '/../controllers/homeController.php';
 
+
 // Obtener la ruta solicitada
 $uri = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 
@@ -23,6 +24,8 @@ if ($uri === '' || $uri === 'login') {
     changeStatus();
 } elseif ($uri === 'logout') {
     logout();
+} elseif ($uri === 'syncTodoist') {
+    syncTodoist();
 } else {
     http_response_code(404);
     echo "Página no encontrada.";
