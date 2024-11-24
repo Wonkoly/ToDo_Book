@@ -17,10 +17,10 @@ if ($uri === '' || $uri === 'login') {
     addItem();
 } elseif ($uri === 'updateSettings') {
     updateSettings();
-} elseif ($uri === 'changeStatus') {
-    changeStatus(); 
 } elseif ($uri === 'deleteItem') {
-    deleteItem(); 
+    deleteItem();
+} elseif ($uri === 'changeStatus') {
+    changeStatus();
 } elseif ($uri === 'logout') {
     logout();
 } else {

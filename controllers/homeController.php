@@ -55,42 +55,24 @@ function updateSettings() {
     }
 }
 
-function changeStatus() {
+function deleteItem() {
     session_start();
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $itemId = $_POST['id']; // Obtener el ID del formulario
-        $newStatus = $_POST['status']; // Obtener el nuevo estado
-
-        if (!$itemId || !$newStatus) {
-            die("ID o estado no proporcionado.");
-        }
-
-        if (updateItemStatus($itemId, $newStatus)) {
-            header('Location: /home'); // Redirigir a la página principal
-            exit;
-        } else {
-            die("Error al cambiar el estado.");
-        }
+        $itemId = $_POST['id'];
+        deleteItemById($itemId); // Eliminar el elemento de la base de datos
+        header('Location: /home');
+        exit;
     }
 }
 
-function deleteItem() {
+function changeStatus() {
     session_start();
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $itemId = $_POST['id']; // Obtener el ID del formulario
-
-        if (!$itemId) {
-            die("ID no proporcionado.");
-        }
-
-        if (removeItem($itemId)) {
-            header('Location: /home'); // Redirigir a la página principal
-            exit;
-        } else {
-            die("Error al eliminar el elemento de la base de datos.");
-        }
+        $itemId = $_POST['id'];
+        $newStatus = $_POST['status'];
+        updateItemStatus($itemId, $newStatus); // Actualizar el estado del elemento
+        header('Location: /home');
+        exit;
     }
 }
 ?>

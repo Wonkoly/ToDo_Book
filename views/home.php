@@ -45,17 +45,17 @@ $books = getItemsByUser($userId); // Obtener los libros del usuario
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
             <select id="typeFilter" class="form-select d-inline-block" style="width: auto;">
-                <option value="all">Todo</option>
-                <option value="book">Libros</option>
-                <option value="series">Series</option>
-                <option value="movie">Películas</option>
+                <option value="todo">Todo</option>
+                <option value="libro">Libros</option>
+                <option value="serie">Series</option>
+                <option value="pelicula">Películas</option>
             </select>
         </div>
         <div>
             <select id="statusFilter" class="form-select d-inline-block" style="width: auto;">
-                <option value="all">Todo</option>
-                <option value="completed">Completado</option>
-                <option value="pending">Pendiente</option>
+                <option value="todo">Todo</option>
+                <option value="completado">Completado</option>
+                <option value="pendiente">Pendiente</option>
             </select>
         </div>
     </div>
@@ -72,23 +72,23 @@ $books = getItemsByUser($userId); // Obtener los libros del usuario
         </thead>
         <tbody id="booksTable">
             <?php foreach ($books as $book): ?>
-            <tr>
+            <tr data-type="<?= htmlspecialchars($book['type']) ?>" data-status="<?= htmlspecialchars($book['status']) ?>">
                 <td><?= htmlspecialchars($book['title']) ?></td>
                 <td><?= htmlspecialchars($book['type']) ?></td>
                 <td><?= htmlspecialchars($book['status']) ?></td>
                 <td>
-                    <!-- Formulario para eliminar -->
-                    <form action="/deleteItem" method="POST" style="display: inline;">
-                        <input type="hidden" name="id" value="<?= htmlspecialchars($book['id']) ?>">
-                        <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                    <!-- Botón para eliminar -->
+                    <form method="post" action="/deleteItem" style="display:inline;">
+                        <input type="hidden" name="id" value="<?= htmlspecialchars($book['id'] ?? '') ?>">
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                     </form>
 
-                    <!-- Formulario para cambiar estado -->
-                    <form action="/changeStatus" method="POST" style="display: inline;">
+                    <!-- Botón para cambiar estado -->
+                    <form method="POST" action="/changeStatus" style="display:inline;">
                         <input type="hidden" name="id" value="<?= htmlspecialchars($book['id']) ?>">
-                        <input type="hidden" name="status" value="<?= $book['status'] === 'pending' ? 'completed' : 'pending' ?>">
-                        <button type="submit" class="btn btn-sm btn-success">
-                            <?= $book['status'] === 'pending' ? 'Marcar como Completado' : 'Marcar como Pendiente' ?>
+                        <input type="hidden" name="status" value="<?= $book['status'] === 'pendiente' ? 'completado' : 'pendiente' ?>">
+                        <button type="submit" class="btn btn-warning btn-sm">
+                            <?= $book['status'] === 'pendiente' ? 'Marcar como Completado' : 'Marcar como Pendiente' ?>
                         </button>
                     </form>
                 </td>
@@ -145,16 +145,16 @@ $books = getItemsByUser($userId); // Obtener los libros del usuario
                     <div class="mb-3">
                         <label for="type" class="form-label">Tipo</label>
                         <select class="form-select" id="type" name="type" required>
-                            <option value="book">Libro</option>
-                            <option value="series">Serie</option>
-                            <option value="movie">Película</option>
+                            <option value="libro">Libro</option>
+                            <option value="serie">Serie</option>
+                            <option value="pelicula">Película</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="status" class="form-label">Estado</label>
                         <select class="form-select" id="status" name="status" required>
-                            <option value="pending">Pendiente</option>
-                            <option value="completed">Completado</option>
+                            <option value="pendiente">Pendiente</option>
+                            <option value="completado">Completado</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Guardar</button>
@@ -164,8 +164,8 @@ $books = getItemsByUser($userId); // Obtener los libros del usuario
     </div>
 </div>
 
-<script>
-    // Filtros para la tabla
+<script> 
+    // Filtros para la tabla 
     const typeFilter = document.getElementById('typeFilter');
     const statusFilter = document.getElementById('statusFilter');
     const booksTable = document.getElementById('booksTable');
@@ -178,10 +178,10 @@ $books = getItemsByUser($userId); // Obtener los libros del usuario
             const rowType = row.getAttribute('data-type');
             const rowStatus = row.getAttribute('data-status');
 
-            const typeMatch = type === 'all' || type === rowType;
-            const statusMatch = status === 'all' || status === rowStatus;
+            const typeMatch = type === 'todo' || type === rowType;
+            const statusMatch = status === 'todo' || status === rowStatus;
 
-            row.style.display = typeMatch && statusMatch ? '' : 'none';
+            row.style.display = typeMatch && statusMatch ? 'table-row' : 'none';
         });
     }
 
