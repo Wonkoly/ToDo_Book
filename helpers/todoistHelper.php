@@ -1,5 +1,5 @@
 <?php
-
+// Funcion para comunicarte con la Api de Todoist meidante la apikey
 function callTodoistApi($method, $endpoint, $apiKey, $data = null) {
     $url = "https://api.todoist.com/rest/v2/" . $endpoint;
 
@@ -25,6 +25,7 @@ function callTodoistApi($method, $endpoint, $apiKey, $data = null) {
     return json_decode($response, true);
 }
 
+// Funcion para Crear Proyecto de ToDoBook en Todoist
 function getOrCreateTodoistProject($apiKey, $projectName = "ToDoBook") {
     $projects = callTodoistApi('GET', 'projects', $apiKey);
 
@@ -42,5 +43,4 @@ function getOrCreateTodoistProject($apiKey, $projectName = "ToDoBook") {
 
     return $newProject['id'] ?? null;
 }
-
 ?>
