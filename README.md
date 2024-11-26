@@ -60,9 +60,36 @@ ToDo_Book es una aplicación web diseñada para llevar un seguimiento de libros,
    - Diseño intuitivo basado en Bootstrap, optimizado para usabilidad.
    ![Diseño general](docs/images/canvas_todobook.png)
 
+## Base de Datos
+
+A continuación, se muestra el esquema base de las tablas utilizadas en este proyecto. Crea estas tablas en tu base de datos MySQL.
+
+```sql
+CREATE TABLE `items` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `type` enum('libro','serie','pelicula') NOT NULL,
+  `status` enum('pendiente','completado') DEFAULT 'pendiente',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `items_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(255) NOT NULL UNIQUE,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
 ## Integración con Todoist
 
 Si decides integrar la API de Todoist:
 1. Genera una API Key desde tu cuenta de Todoist.
 2. Ingresa la clave en la sección de configuración.
-3. La aplicación creará automáticamente un proyecto en Todoist llamado `ToDoBook`, donde tus libros, series y películas se organizarán por secciones.
+3. La aplicación creará automáticamente un proyecto en Todoist llamado `ToDoBook`, donde tus libros, series y películas se organizarán por secciones.   
